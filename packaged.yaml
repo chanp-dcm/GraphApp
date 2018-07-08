@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'sam-app
+
+  Sample SAM Template for sam-app
+
+  '
+Globals:
+  Function:
+    Timeout: 30
+Outputs:
+  NogizakaGraphApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+Resources:
+  GetFunction:
+    Properties:
+      CodeUri: s3://hayashi-sample/b76d0603ca760b646e01759594110874
+      Environment:
+        Variables:
+          PARAM1: VALUE
+      Events:
+        HelloWorld:
+          Properties:
+            Method: get
+            Path: /main
+          Type: Api
+      Handler: app.lambda_handler
+      Runtime: python3.6
+    Type: AWS::Serverless::Function
+  PartsTable:
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: partsID
+        AttributeType: N
+      KeySchema:
+      - AttributeName: partsID
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+    Type: AWS::DynamoDB::Table
+Transform: AWS::Serverless-2016-10-31

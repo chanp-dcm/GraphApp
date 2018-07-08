@@ -1,1 +1,3 @@
 requests==2.18.4
+boto3==1.7.45
+awscli==1.15.46 

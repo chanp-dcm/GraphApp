@@ -1,20 +1,15 @@
 import json
-
+import boto3
 import requests
 
 
 def lambda_handler(event, context):
-    """Sample pure Lambda function
-
-    Arguments:
-        event LambdaEvent -- Lambda Event received from Invoke API
-        context LambdaContext -- Lambda Context runtime methods and attributes
-
-    Returns:
-        dict -- {'statusCode': int, 'body': dict}
-    """
-
     ip = requests.get('http://checkip.amazonaws.com/')
+
+    dynamodb = boto3.resource(
+                    'dynamodb',
+                    region_name='ap-northeast-a'
+                )
 
     return {
         "statusCode": 200,
